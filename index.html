@@ -760,75 +760,94 @@ input[type=range]::-moz-range-thumb {
 </div><!-- /wrap -->
 
 <script>
-/* ── DATA ── */
-const DOCS = [
-  { title: "Top Photography Spots in London",            cat: "photography",    sim: 0.267 },
-  { title: "The Evolution of Theatre in London",         cat: "culture",        sim: 0.238 },
-  { title: "The Best Photography Exhibitions in London", cat: "photography",    sim: 0.222 },
-  { title: "Best Photo Spots in London",                 cat: "photography",    sim: 0.222 },
-  { title: "Family-Friendly Events in London",           cat: "things-to-do",   sim: 0.221 },
-  { title: "Family-Friendly Activities in London",       cat: "things-to-do",   sim: 0.211 },
-  { title: "How London's Weather Has Changed Over the Decades", cat: "weather", sim: 0.208 },
-  { title: "Getting Around London: A Transit Guide",     cat: "transport",      sim: 0.208 },
-  { title: "Exploring London's Cultural Scene",          cat: "culture",        sim: 0.203 },
-  { title: "Unique Shopping Experiences in London",      cat: "shopping",       sim: 0.196 },
-  { title: "London's Street Food Revolution",            cat: "food",           sim: 0.192 },
-  { title: "Hidden Gems: Lesser-Known London Museums",   cat: "culture",        sim: 0.189 },
-  { title: "London's Green Spaces and Parks",            cat: "nature",         sim: 0.185 },
-  { title: "A Night Out in London: Bars and Clubs",      cat: "nightlife",      sim: 0.181 },
-  { title: "Luxury Hotels in Central London",            cat: "accommodation",  sim: 0.178 },
-  { title: "London for Architecture Lovers",             cat: "architecture",   sim: 0.174 },
-  { title: "Budget Travel in London",                    cat: "travel",         sim: 0.170 },
-  { title: "London's Best Coffee Shops",                 cat: "food",           sim: 0.165 },
-  { title: "The Thames: London's Iconic River",          cat: "landmarks",      sim: 0.161 },
-  { title: "London Fashion Week Highlights",             cat: "fashion",        sim: 0.157 },
-  { title: "Day Trips from London",                      cat: "travel",         sim: 0.153 },
-];
-
 /* ── STATE ── */
 let lambda = 0.7, k = 7;
 
-/* ── MMR ── */
-function pairSim(a, b) {
-  return Math.max(0, 1 - Math.abs(a.sim - b.sim) * 9);
-}
+/* Real data loaded from data.json — same matrices the Python backend produced */
+let DOCS = [];          // [{title, cat, sim, idx}]
+let Q_SIM = [];         // Float64 array  [n]
+let DOC_SIM = [];       // Float64 2-D    [n][n]
 
-function mmrRank(docs, n, lam) {
-  const pool = [...docs];
-  const sel = [];
-  while (sel.length < n && pool.length) {
-    let bi = 0, best = -Infinity;
-    pool.forEach((d, i) => {
-      const ms = sel.length ? Math.max(...sel.map(s => pairSim(d, s))) : 0;
-      const sc = lam * d.sim - (1 - lam) * ms;
+/* ── MMR — uses exact doc_doc_sim matrix from data.json ── */
+function mmrRank(n, lam) {
+  const total = DOCS.length;
+  if (!total || n <= 0) return [];
+  const cap = Math.min(n, total);
+
+  // running max-sim-to-selected vector (length = total)
+  const maxSim = new Float64Array(total);
+  const used   = new Uint8Array(total);
+
+  // first pick: highest query-doc sim
+  let first = 0;
+  for (let i = 1; i < total; i++) if (Q_SIM[i] > Q_SIM[first]) first = i;
+  const sel = [first];
+  used[first] = 1;
+  for (let i = 0; i < total; i++) maxSim[i] = DOC_SIM[first][i];
+
+  while (sel.length < cap) {
+    let best = -Infinity, bi = -1;
+    for (let i = 0; i < total; i++) {
+      if (used[i]) continue;
+      const sc = lam * Q_SIM[i] - (1 - lam) * maxSim[i];
       if (sc > best) { best = sc; bi = i; }
-    });
-    sel.push(pool.splice(bi, 1)[0]);
+    }
+    sel.push(bi);
+    used[bi] = 1;
+    // update running max
+    for (let i = 0; i < total; i++)
+      if (DOC_SIM[bi][i] > maxSim[i]) maxSim[i] = DOC_SIM[bi][i];
   }
-  return sel;
+  return sel.map(i => DOCS[i]);
 }
 
-function baseRank(docs, n) {
-  return [...docs].sort((a, b) => b.sim - a.sim).slice(0, n);
+function baseRank(n) {
+  return [...DOCS].sort((a, b) => b.sim - a.sim).slice(0, Math.min(n, DOCS.length));
+}
+
+/* ── STATS — use real doc_doc_sim via indices ── */
+function avgMaxPairSim(items) {
+  let t = 0, c = 0;
+  for (let i = 0; i < items.length; i++)
+    for (let j = i + 1; j < items.length; j++) {
+      t += DOC_SIM[items[i].idx][items[j].idx]; c++;
+    }
+  return c ? t / c : 0;
+}
+
+function calcStats(mmrItems, baseItems) {
+  const mp = avgMaxPairSim(mmrItems), bp = avgMaxPairSim(baseItems);
+  const mr = mmrItems.reduce((s, d) => s + d.sim, 0) / mmrItems.length;
+  const br = baseItems.reduce((s, d) => s + d.sim, 0) / baseItems.length;
+  const red = bp > 0 ? Math.round((1 - mp / bp) * 100) : 0;
+
+  document.getElementById('sMaxSim').textContent         = mp.toFixed(3);
+  document.getElementById('sMaxSimBase').textContent     = 'base ' + bp.toFixed(3);
+  document.getElementById('sRedundancy').textContent     = (mp * 0.75).toFixed(3);
+  document.getElementById('sRedundancyBase').textContent = 'base ' + (bp * 0.75).toFixed(3);
+  document.getElementById('sRelevance').textContent      = mr.toFixed(3);
+  document.getElementById('sRelevanceBase').textContent  = 'base ' + br.toFixed(3);
+  document.getElementById('sDiversity').textContent      = (1 - mp).toFixed(3);
+  document.getElementById('sDiversityBase').textContent  = 'base ' + (1 - bp).toFixed(3);
+  document.getElementById('sRedPct').textContent         = '−' + red + '%';
 }
 
 /* ── RENDER ── */
 function renderList(id, items, baseItems) {
   const baseTitles = new Set(baseItems.map(d => d.title));
   const isMMR = id === 'mmrList';
-  const el = document.getElementById(id);
   const catCount = {};
   items.forEach(d => { catCount[d.cat] = (catCount[d.cat] || 0) + 1; });
 
-  el.innerHTML = items.map((d, i) => {
+  document.getElementById(id).innerHTML = items.map((d, i) => {
     const isNew = isMMR && !baseTitles.has(d.title);
     const isDup = !isMMR && catCount[d.cat] > 1 &&
       items.findIndex(x => x.cat === d.cat) !== i;
     const badge = isNew ? '<span class="r-badge badge-new">NEW</span>' :
                   isDup ? '<span class="r-badge badge-dup">DUP</span>' : '';
-    const catCls = 'c-' + d.cat.replace(/[^a-z]/g,'-');
-    return `<div class="r-item${isNew?' is-new':''}${isDup?' is-dup':''}">
-      <div class="r-num">${i+1}</div>
+    const catCls = 'c-' + d.cat.replace(/[^a-z]/g, '-');
+    return `<div class="r-item${isNew ? ' is-new' : ''}${isDup ? ' is-dup' : ''}">
+      <div class="r-num">${i + 1}</div>
       <div class="r-body">
         <div class="r-title">${d.title}</div>
         <div class="r-meta">
@@ -841,45 +860,22 @@ function renderList(id, items, baseItems) {
   }).join('');
 }
 
-function calcStats(mmr, base) {
-  function avgPair(items) {
-    let t=0,c=0;
-    for(let i=0;i<items.length;i++)
-      for(let j=i+1;j<items.length;j++){t+=pairSim(items[i],items[j]);c++;}
-    return c?t/c:0;
-  }
-  const mp=avgPair(mmr), bp=avgPair(base);
-  const mr=mmr.reduce((s,d)=>s+d.sim,0)/mmr.length;
-  const br=base.reduce((s,d)=>s+d.sim,0)/base.length;
-  const md=1-mp, bd=1-bp;
-  const red=bp>0?Math.round((1-mp/bp)*100):0;
-
-  document.getElementById('sMaxSim').textContent     = mp.toFixed(3);
-  document.getElementById('sMaxSimBase').textContent = 'base '+bp.toFixed(3);
-  document.getElementById('sRedundancy').textContent     = (mp*0.75).toFixed(3);
-  document.getElementById('sRedundancyBase').textContent = 'base '+(bp*0.75).toFixed(3);
-  document.getElementById('sRelevance').textContent     = mr.toFixed(3);
-  document.getElementById('sRelevanceBase').textContent = 'base '+br.toFixed(3);
-  document.getElementById('sDiversity').textContent     = md.toFixed(3);
-  document.getElementById('sDiversityBase').textContent = 'base '+bd.toFixed(3);
-  document.getElementById('sRedPct').textContent = '−'+red+'%';
-}
-
 function update() {
-  const base = baseRank(DOCS, k);
-  const mmr  = mmrRank(DOCS, k, lambda);
+  if (!DOCS.length) return;
+  const base = baseRank(k);
+  const mmr  = mmrRank(k, lambda);
   renderList('baselineList', base, base);
   renderList('mmrList', mmr, base);
   calcStats(mmr, base);
-  document.getElementById('mmrChip').textContent = 'λ='+lambda.toFixed(2);
+  document.getElementById('mmrChip').textContent = 'λ=' + lambda.toFixed(2);
 }
 
 /* ── CONTROLS ── */
 const TAGS = {
-  '0.0':'max diversity',
-  '0.3':'diversity-leaning',
-  '0.7':'production sweet spot',
-  '1.0':'pure relevance'
+  '0.0': 'max diversity',
+  '0.3': 'diversity-leaning',
+  '0.7': 'production sweet spot',
+  '1.0': 'pure relevance'
 };
 
 function setLambda(v) {
@@ -887,34 +883,34 @@ function setLambda(v) {
   document.getElementById('lambdaSlider').value = lambda;
   document.getElementById('lambdaDisplay').textContent = lambda.toFixed(2);
   document.getElementById('lambdaTag').textContent =
-    TAGS[lambda.toFixed(1)] || (lambda<0.5?'diversity-leaning':'relevance-leaning');
+    TAGS[lambda.toFixed(1)] || (lambda < 0.5 ? 'diversity-leaning' : 'relevance-leaning');
   document.querySelectorAll('.preset').forEach(c =>
-    c.classList.toggle('active', Math.abs(parseFloat(c.dataset.val)-lambda)<0.01));
+    c.classList.toggle('active', Math.abs(parseFloat(c.dataset.val) - lambda) < 0.01));
   update();
 }
 
 function onSliderInput(v) {
   lambda = parseFloat(v);
   document.getElementById('lambdaDisplay').textContent = lambda.toFixed(2);
-  const t = lambda<=0.05?'max diversity':lambda>=0.95?'pure relevance':
-            lambda<0.5?'diversity-leaning':lambda<0.75?'production sweet spot':'relevance-leaning';
+  const t = lambda <= 0.05 ? 'max diversity' : lambda >= 0.95 ? 'pure relevance' :
+            lambda < 0.5 ? 'diversity-leaning' : lambda < 0.75 ? 'production sweet spot' : 'relevance-leaning';
   document.getElementById('lambdaTag').textContent = t;
   document.querySelectorAll('.preset').forEach(c =>
-    c.classList.toggle('active', Math.abs(parseFloat(c.dataset.val)-lambda)<0.01));
+    c.classList.toggle('active', Math.abs(parseFloat(c.dataset.val) - lambda) < 0.01));
   update();
 }
 
 function setK(v) {
   k = v;
   document.querySelectorAll('.k-btn').forEach(b =>
-    b.classList.toggle('active', parseInt(b.dataset.k)===k));
+    b.classList.toggle('active', parseInt(b.dataset.k) === k));
   update();
 }
 
 function switchTab(name) {
-  ['baseline','mmr'].forEach(n => {
-    document.getElementById('tab-'+n).classList.toggle('active', n===name);
-    document.getElementById('panel-'+n).classList.toggle('active', n===name);
+  ['baseline', 'mmr'].forEach(n => {
+    document.getElementById('tab-' + n).classList.toggle('active', n === name);
+    document.getElementById('panel-' + n).classList.toggle('active', n === name);
   });
 }
 
@@ -922,8 +918,27 @@ function toggleAcc() {
   document.getElementById('formulaAcc').classList.toggle('open');
 }
 
-/* ── INIT ── */
-update();
+/* ── BOOT: load data.json, then render ── */
+fetch('data.json')
+  .then(r => r.json())
+  .then(data => {
+    Q_SIM   = data.query_doc_sim;           // real TF-IDF cosine scores
+    DOC_SIM = data.doc_doc_sim;             // real 21×21 pairwise matrix
+    DOCS    = data.documents.map((d, i) => ({
+      idx: i,
+      title: d.title,
+      cat:   d.category,
+      sim:   Q_SIM[i]
+    }));
+    update();
+  })
+  .catch(err => {
+    document.getElementById('mmrList').innerHTML =
+      `<div style="padding:20px;font-family:var(--font-mono);font-size:.8rem;color:var(--red)">
+        Failed to load data.json: ${err.message}
+      </div>`;
+    console.error('data.json load failed:', err);
+  });
 </script>
 </body>
 </html>
