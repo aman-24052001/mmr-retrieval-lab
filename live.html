@@ -489,16 +489,23 @@ async function run() {
   $('progressBar').style.width='100%';
 
   const idxs = docs.map((_,i)=>i);
+  const ek = effectiveK();
   const baseline = baselineRank(idxs, qvec, k);
-  const mmr = mmrRank(idxs, qvec, k, lambda);
+  const mmr = mmrRank(idxs, qvec, ek, lambda);
   lastResults = { qvec, baseline:baselineRank(idxs,qvec,docs.length), full:true };
 
-  renderResults(baseline, mmr);
+  renderResults(baseline, mmr, ek);
   $('controls').classList.add('show');
   $('emptyHint').style.display='none';
   $('progressWrap').classList.remove('show');
   $('runBtn').disabled = false;
   saveState();
+}
+
+/* effectiveK — MMR caps at 70% of corpus so there's always a pool to draw NEW docs from */
+function effectiveK() {
+  const n = docs.filter(d=>d.vec).length || docs.length;
+  return Math.max(1, Math.min(k, Math.floor(n * 0.7)));
 }
 
 /* recompute rankings only (no re-embed) when lambda/k change */
@@ -507,14 +514,35 @@ function recompute() {
   const qvec = lastResults.qvec;
   const idxs = docs.map((_,i)=>i).filter(i=>docs[i].vec);
   if (idxs.length<2) return;
-  renderResults(baselineRank(idxs,qvec,k), mmrRank(idxs,qvec,k,lambda));
+  const ek = effectiveK();
+  renderResults(baselineRank(idxs,qvec,k), mmrRank(idxs,qvec,ek,lambda), ek);
 }
 
-function renderResults(baseline, mmr) {
+function renderResults(baseline, mmr, ek) {
   renderList('baselineList', baseline, baseline, false);
   renderList('mmrList', mmr, baseline, true);
   calcStats(mmr, baseline);
   $('mmrChip').textContent = 'λ='+lambda.toFixed(2);
+
+  // warning when k >= doc count (MMR couldn't exclude anything)
+  const warnId = 'mmrWarn';
+  let warn = $(warnId);
+  if (!warn) {
+    warn = document.createElement('div');
+    warn.id = warnId;
+    warn.style.cssText = 'font-family:var(--font-mono);font-size:0.65rem;font-weight:700;'+
+      'text-transform:uppercase;letter-spacing:0.05em;background:var(--yellow);'+
+      'border:var(--border);border-top:none;padding:10px 14px;line-height:1.5;';
+    $('tab-mmr').closest('.tab-bar').after(warn);
+  }
+  const tooFew = docs.length <= k;
+  warn.style.display = tooFew ? 'block' : 'none';
+  warn.textContent = tooFew
+    ? `⚠ Add more docs (need > ${k}) or lower k to see MMR diverge from baseline`
+    : `MMR showing top ${ek} of ${docs.length} docs — baseline shows all ${Math.min(k,docs.length)}`;
+
+  // always switch to MMR tab after a run so user sees the result
+  switchTab('mmr');
 }
 function renderList(id, items, baseItems, isMMR) {
   const baseIds = new Set(baseItems.map(x=>x.idx));
