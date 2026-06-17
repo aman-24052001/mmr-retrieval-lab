@@ -1,1 +1,929 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="/mmr-retrieval-lab/_next/static/chunks/28utlym4i-2-0.css" data-precedence="next"/><link rel="preload" as="script" fetchPriority="low" href="/mmr-retrieval-lab/_next/static/chunks/1jq4o6yq14o4c.js"/><script src="/mmr-retrieval-lab/_next/static/chunks/443skq_0rwght.js" async=""></script><script src="/mmr-retrieval-lab/_next/static/chunks/2nykiepra7i1k.js" async=""></script><script src="/mmr-retrieval-lab/_next/static/chunks/turbopack-3schiqjvn3_0f.js" async=""></script><script src="/mmr-retrieval-lab/_next/static/chunks/158myu8e_yme3.js" async=""></script><script src="/mmr-retrieval-lab/_next/static/chunks/3f36__m4dhu5l.js" async=""></script><title>MMR Retrieval Lab — diversity vs relevance</title><meta name="description" content="Interactive Maximal Marginal Relevance demo. Drag lambda, watch the selected set change."/><link rel="icon" href="/mmr-retrieval-lab/favicon.ico?favicon.2vob68tjqpejf.ico" sizes="256x256" type="image/x-icon"/><script src="/mmr-retrieval-lab/_next/static/chunks/0cz1d0mv5g_q7.js" noModule=""></script></head><body><div hidden=""><!--$--><!--/$--></div><div class="min-h-screen flex items-center justify-center mono" style="background:#FFFDF5"><div class="nb-border nb-shadow px-6 py-4 display text-xl" style="background:#FBE311">LOADING…</div></div><!--$--><!--/$--><script src="/mmr-retrieval-lab/_next/static/chunks/1jq4o6yq14o4c.js" id="_R_" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0])</script><script>self.__next_f.push([1,"1:\"$Sreact.fragment\"\n2:I[39756,[\"/mmr-retrieval-lab/_next/static/chunks/158myu8e_yme3.js\"],\"default\"]\n3:I[37457,[\"/mmr-retrieval-lab/_next/static/chunks/158myu8e_yme3.js\"],\"default\"]\n4:I[47257,[\"/mmr-retrieval-lab/_next/static/chunks/158myu8e_yme3.js\"],\"ClientPageRoot\"]\n5:I[31713,[\"/mmr-retrieval-lab/_next/static/chunks/158myu8e_yme3.js\",\"/mmr-retrieval-lab/_next/static/chunks/3f36__m4dhu5l.js\"],\"default\"]\n8:I[97367,[\"/mmr-retrieval-lab/_next/static/chunks/158myu8e_yme3.js\"],\"OutletBoundary\"]\n9:\"$Sreact.suspense\"\nb:I[97367,[\"/mmr-retrieval-lab/_next/static/chunks/158myu8e_yme3.js\"],\"ViewportBoundary\"]\nd:I[97367,[\"/mmr-retrieval-lab/_next/static/chunks/158myu8e_yme3.js\"],\"MetadataBoundary\"]\nf:I[68027,[\"/mmr-retrieval-lab/_next/static/chunks/158myu8e_yme3.js\"],\"default\",1]\n:HL[\"/mmr-retrieval-lab/_next/static/chunks/28utlym4i-2-0.css\",\"style\"]\n"])</script><script>self.__next_f.push([1,"0:{\"P\":null,\"c\":[\"\",\"\"],\"q\":\"\",\"i\":false,\"f\":[[[\"\",{\"children\":[\"__PAGE__\",{}]},\"$undefined\",\"$undefined\",16],[[\"$\",\"$1\",\"c\",{\"children\":[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/mmr-retrieval-lab/_next/static/chunks/28utlym4i-2-0.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\",\"nonce\":\"$undefined\"}],[\"$\",\"script\",\"script-0\",{\"src\":\"/mmr-retrieval-lab/_next/static/chunks/158myu8e_yme3.js\",\"async\":true,\"nonce\":\"$undefined\"}]],[\"$\",\"html\",null,{\"lang\":\"en\",\"children\":[\"$\",\"body\",null,{\"children\":[\"$\",\"$L2\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L3\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"}],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",\"textAlign\":\"center\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"justifyContent\":\"center\"},\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}}],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":{\"display\":\"inline-block\",\"margin\":\"0 20px 0 0\",\"padding\":\"0 23px 0 0\",\"fontSize\":24,\"fontWeight\":500,\"verticalAlign\":\"top\",\"lineHeight\":\"49px\"},\"children\":404}],[\"$\",\"div\",null,{\"style\":{\"display\":\"inline-block\"},\"children\":[\"$\",\"h2\",null,{\"style\":{\"fontSize\":14,\"fontWeight\":400,\"lineHeight\":\"49px\",\"margin\":0},\"children\":\"This page could not be found.\"}]}]]}]}]],[]],\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}]}]}]]}],{\"children\":[[\"$\",\"$1\",\"c\",{\"children\":[[\"$\",\"$L4\",null,{\"Component\":\"$5\",\"serverProvidedParams\":{\"searchParams\":{},\"params\":{},\"promises\":[\"$@6\",\"$@7\"]}}],[[\"$\",\"script\",\"script-0\",{\"src\":\"/mmr-retrieval-lab/_next/static/chunks/3f36__m4dhu5l.js\",\"async\":true,\"nonce\":\"$undefined\"}]],[\"$\",\"$L8\",null,{\"children\":[\"$\",\"$9\",null,{\"name\":\"Next.MetadataOutlet\",\"children\":\"$@a\"}]}]]}],{},null,false,null]},null,false,null],[\"$\",\"$1\",\"h\",{\"children\":[null,[\"$\",\"$Lb\",null,{\"children\":\"$Lc\"}],[\"$\",\"div\",null,{\"hidden\":true,\"children\":[\"$\",\"$Ld\",null,{\"children\":[\"$\",\"$9\",null,{\"name\":\"Next.Metadata\",\"children\":\"$Le\"}]}]}],null]}],false]],\"m\":\"$undefined\",\"G\":[\"$f\",[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/mmr-retrieval-lab/_next/static/chunks/28utlym4i-2-0.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\",\"nonce\":\"$undefined\"}]]],\"S\":true,\"h\":null,\"s\":\"$undefined\",\"l\":\"$undefined\",\"p\":\"$undefined\",\"d\":\"$undefined\",\"b\":\"iJG9gpTpY6yToTOxF4IWw\"}\n"])</script><script>self.__next_f.push([1,"6:{}\n7:\"$0:f:0:1:1:children:0:props:children:0:props:serverProvidedParams:params\"\n"])</script><script>self.__next_f.push([1,"c:[[\"$\",\"meta\",\"0\",{\"charSet\":\"utf-8\"}],[\"$\",\"meta\",\"1\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}]]\n"])</script><script>self.__next_f.push([1,"10:I[27201,[\"/mmr-retrieval-lab/_next/static/chunks/158myu8e_yme3.js\"],\"IconMark\"]\na:null\ne:[[\"$\",\"title\",\"0\",{\"children\":\"MMR Retrieval Lab — diversity vs relevance\"}],[\"$\",\"meta\",\"1\",{\"name\":\"description\",\"content\":\"Interactive Maximal Marginal Relevance demo. Drag lambda, watch the selected set change.\"}],[\"$\",\"link\",\"2\",{\"rel\":\"icon\",\"href\":\"/mmr-retrieval-lab/favicon.ico?favicon.2vob68tjqpejf.ico\",\"sizes\":\"256x256\",\"type\":\"image/x-icon\"}],[\"$\",\"$L10\",\"3\",{}]]\n"])</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MMR Retrieval Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+button { font-family: inherit; cursor: pointer; }
+a { color: inherit; }
+
+/* ── TOKENS ── */
+:root {
+  --cream:  #FFFBF0;
+  --white:  #FFFFFF;
+  --black:  #000000;
+  --yellow: #FFE500;
+  --blue:   #0047FF;
+  --red:    #FF3B30;
+  --green:  #00C853;
+  --muted:  #555;
+  --border: 3px solid #000;
+  --shadow: 4px 4px 0 #000;
+  --shadow-sm: 3px 3px 0 #000;
+  --shadow-press: 1px 1px 0 #000;
+  --font-ui:   'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+/* ── BASE ── */
+html {
+  background: var(--cream);
+  color: var(--black);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  line-height: 1.4;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 60px;
+}
+
+/* ── HEADER ── */
+.hdr {
+  width: 100%;
+  background: var(--yellow);
+  border-bottom: var(--border);
+  padding: 18px 16px 14px;
+}
+
+.hdr-title {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 7vw, 2rem);
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.hdr-sub {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 5px;
+  opacity: 0.65;
+}
+
+.hdr-src {
+  display: inline-block;
+  margin-top: 14px;
+  background: var(--black);
+  color: var(--yellow);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  text-decoration: none;
+  border: var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.1s, transform 0.1s;
+}
+.hdr-src:active { box-shadow: var(--shadow-press); transform: translate(2px,2px); }
+
+/* ── MAIN CONTAINER ── */
+.wrap {
+  width: 100%;
+  max-width: 480px;
+  padding: 0 14px;
+}
+
+/* ── SECTION LABEL ── */
+.sec-lbl {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+  padding-top: 2px;
+}
+
+/* ── PROBLEM BANNER ── */
+.problem {
+  background: var(--blue);
+  color: var(--white);
+  border: var(--border);
+  border-top: none;
+  box-shadow: var(--shadow);
+  padding: 16px;
+  margin-bottom: 2px;
+}
+
+.problem-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 6px;
+}
+
+.problem-headline {
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1.3;
+}
+
+.problem-desc {
+  font-size: 0.8rem;
+  margin-top: 8px;
+  opacity: 0.85;
+  line-height: 1.5;
+}
+
+.query-pill {
+  display: inline-block;
+  background: var(--yellow);
+  color: var(--black);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.72rem;
+  padding: 1px 7px;
+  border: 2px solid var(--black);
+}
+
+/* ── CARD BASE ── */
+.card {
+  background: var(--white);
+  border: var(--border);
+  box-shadow: var(--shadow);
+  padding: 14px;
+}
+
+.mt { margin-top: 14px; }
+
+/* ── LAMBDA SECTION ── */
+.lambda-display {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--black);
+}
+
+.lambda-num {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 3.2rem;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  transition: color 0.15s;
+}
+
+.lambda-tag {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: var(--yellow);
+  border: 2px solid var(--black);
+  padding: 3px 8px;
+  margin-bottom: 6px;
+  white-space: nowrap;
+}
+
+/* PRESET CHIPS */
+.presets {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.preset {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 7px 14px;
+  min-height: 38px;
+  background: var(--white);
+  border: var(--border);
+  box-shadow: var(--shadow-sm);
+  color: var(--black);
+  transition: box-shadow 0.1s, transform 0.1s, background 0.1s;
+}
+.preset.active {
+  background: var(--yellow);
+  box-shadow: var(--shadow-press);
+  transform: translate(2px,2px);
+}
+.preset:active {
+  box-shadow: var(--shadow-press);
+  transform: translate(2px,2px);
+}
+
+/* SLIDER */
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Neo-brutalist square slider */
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  background: var(--cream);
+  border: 2px solid var(--black);
+  outline: none;
+  cursor: pointer;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 32px;
+  height: 32px;
+  background: var(--yellow);
+  border: 3px solid var(--black);
+  border-radius: 0; /* THE SIGNATURE — square thumb */
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--black);
+  transition: box-shadow 0.1s, transform 0.1s;
+}
+
+input[type=range]:active::-webkit-slider-thumb {
+  box-shadow: 1px 1px 0 var(--black);
+  transform: translate(2px, 2px);
+}
+
+input[type=range]::-moz-range-thumb {
+  width: 32px;
+  height: 32px;
+  background: var(--yellow);
+  border: 3px solid var(--black);
+  border-radius: 0;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--black);
+}
+
+/* ── K BUTTONS ── */
+.k-row {
+  display: flex;
+  gap: 0;
+  margin-top: 14px;
+}
+
+.k-label-txt {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  align-self: center;
+  padding-right: 10px;
+  white-space: nowrap;
+  color: var(--muted);
+}
+
+.k-btn {
+  flex: 1;
+  min-height: 44px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1rem;
+  background: var(--white);
+  border: var(--border);
+  color: var(--black);
+  margin-left: -3px;
+  position: relative;
+  z-index: 1;
+  transition: background 0.1s, z-index 0s;
+}
+.k-btn:first-of-type { margin-left: 0; }
+.k-btn.active {
+  background: var(--yellow);
+  z-index: 2;
+}
+.k-btn:active { background: var(--yellow); }
+
+/* ── STATS GRID ── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: var(--border);
+  box-shadow: var(--shadow);
+  margin-top: 14px;
+}
+
+.stat-cell {
+  background: var(--white);
+  padding: 12px 12px 10px;
+  border-right: 2px solid var(--black);
+  border-bottom: 2px solid var(--black);
+}
+.stat-cell:nth-child(2n) { border-right: none; }
+.stat-cell:nth-child(3),
+.stat-cell:nth-child(4) { border-bottom: none; }
+
+.stat-cell.hi { background: var(--yellow); }
+
+.stat-name {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.stat-cell.hi .stat-name { color: #222; }
+
+.stat-val {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.7rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.stat-base {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--muted);
+  margin-top: 3px;
+}
+
+/* REDUNDANCY CALLOUT */
+.red-callout {
+  background: var(--green);
+  border: var(--border);
+  border-top: none;
+  box-shadow: var(--shadow);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 2px;
+}
+
+.red-pct {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.red-desc {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+}
+
+/* ── TABS ── */
+.tab-bar {
+  display: flex;
+  border: var(--border);
+  box-shadow: var(--shadow);
+  margin-top: 14px;
+}
+
+.tab-btn {
+  flex: 1;
+  min-height: 48px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--white);
+  border: none;
+  border-right: var(--border);
+  color: var(--muted);
+  padding: 10px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: background 0.1s;
+}
+.tab-btn:last-child { border-right: none; }
+.tab-btn.active { background: var(--cream); color: var(--black); }
+
+.tab-badge {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border: 2px solid var(--black);
+}
+.tab-badge-red  { background: var(--red);  color: #fff; }
+.tab-badge-blue { background: var(--blue); color: #fff; }
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── RESULT LIST ── */
+.result-list {
+  display: flex;
+  flex-direction: column;
+  border-left: var(--border);
+  border-right: var(--border);
+  border-bottom: var(--border);
+  box-shadow: var(--shadow);
+  margin-bottom: 4px;
+}
+
+.r-item {
+  display: flex;
+  align-items: stretch;
+  border-top: 2px solid var(--black);
+  background: var(--white);
+  position: relative;
+  min-height: 56px;
+  transition: background 0.1s;
+}
+.r-item:first-child { border-top: none; }
+.r-item.is-new { background: #F0F5FF; }
+.r-item.is-dup { background: #FFF5F5; opacity: 0.7; }
+
+.r-num {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--muted);
+  min-width: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 2px solid var(--black);
+  flex-shrink: 0;
+  background: var(--cream);
+}
+
+.r-body {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 10px 10px 12px;
+}
+
+.r-title {
+  font-weight: 700;
+  font-size: 0.88rem;
+  line-height: 1.3;
+  word-break: break-word;
+  padding-right: 36px; /* room for badge */
+}
+
+.r-meta {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+.r-cat {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.r-sim {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--muted);
+}
+
+/* category colors */
+.c-photography  { color: #111; }
+.c-culture      { color: #B45309; }
+.c-things-to-do { color: #B45309; }
+.c-weather      { color: var(--blue); }
+.c-transport    { color: var(--blue); }
+.c-shopping     { color: #7C3AED; }
+.c-food         { color: #059669; }
+.c-nature       { color: #059669; }
+.c-nightlife    { color: #DB2777; }
+.c-accommodation{ color: #0891B2; }
+.c-architecture { color: #111; }
+.c-travel       { color: #D97706; }
+.c-landmarks    { color: #0891B2; }
+.c-fashion      { color: #DB2777; }
+
+.r-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 2px 6px;
+  border: 2px solid var(--black);
+}
+.badge-new { background: var(--blue);   color: #fff; }
+.badge-dup { background: var(--red);    color: #fff; }
+
+/* ── FORMULA ACCORDION ── */
+.accordion {
+  border: var(--border);
+  box-shadow: var(--shadow);
+  margin-top: 14px;
+  overflow: hidden;
+}
+
+.acc-toggle {
+  width: 100%;
+  background: var(--black);
+  color: var(--yellow);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 14px 16px;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.acc-icon {
+  font-size: 1.1rem;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+.accordion.open .acc-icon { transform: rotate(180deg); }
+
+.acc-body {
+  display: none;
+  background: var(--white);
+  padding: 16px;
+  border-top: var(--border);
+}
+.accordion.open .acc-body { display: block; }
+
+.formula-eq {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 2;
+  background: var(--cream);
+  border: 2px solid var(--black);
+  padding: 12px 14px;
+}
+
+.f-lambda  { color: var(--blue);  font-weight: 700; }
+.f-penalty { color: var(--red);   font-weight: 700; }
+
+.formula-desc {
+  font-size: 0.8rem;
+  color: #333;
+  margin-top: 12px;
+  line-height: 1.55;
+}
+
+.formula-cite {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--muted);
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 2px solid var(--black);
+  line-height: 1.6;
+}
+
+/* ── UTILS ── */
+@media (min-width: 500px) {
+  .wrap { padding: 0 20px; }
+  .stat-val { font-size: 2rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-title">MMR Retrieval Lab</div>
+  <div class="hdr-sub">Maximal Marginal Relevance · Diversity vs Relevance</div>
+  <a class="hdr-src" href="https://github.com/aman-24052001/mmr-retrieval-lab" target="_blank" rel="noopener">
+    VIEW SOURCE →
+  </a>
+</header>
+
+<div class="wrap">
+
+  <!-- PROBLEM BANNER -->
+  <div class="problem">
+    <div class="problem-eyebrow">The Problem</div>
+    <div class="problem-headline">Rank by relevance alone — your top results repeat themselves.</div>
+    <div class="problem-desc">
+      Query <span class="query-pill">"London"</span> across 21 documents.
+      Drag λ and watch MMR trade relevance for diversity in real time.
+    </div>
+  </div>
+
+  <!-- LAMBDA CONTROL -->
+  <div class="card mt">
+    <div class="sec-lbl">Lambda (λ) — Relevance vs Diversity</div>
+
+    <div class="lambda-display">
+      <span class="lambda-num" id="lambdaDisplay">0.70</span>
+      <span class="lambda-tag" id="lambdaTag">production sweet spot</span>
+    </div>
+
+    <div class="presets">
+      <button class="preset" data-val="0.0" onclick="setLambda(0.0)">0.0</button>
+      <button class="preset" data-val="0.3" onclick="setLambda(0.3)">0.3</button>
+      <button class="preset active" data-val="0.7" onclick="setLambda(0.7)">0.7</button>
+      <button class="preset" data-val="1.0" onclick="setLambda(1.0)">1.0</button>
+    </div>
+
+    <div class="slider-labels">
+      <span>← most diverse</span>
+      <span>most relevant →</span>
+    </div>
+    <input type="range" id="lambdaSlider"
+           min="0" max="1" step="0.01" value="0.7"
+           oninput="onSliderInput(this.value)">
+
+    <div class="k-row">
+      <span class="k-label-txt">Results (k):</span>
+      <button class="k-btn" data-k="5" onclick="setK(5)">5</button>
+      <button class="k-btn active" data-k="7" onclick="setK(7)">7</button>
+      <button class="k-btn" data-k="10" onclick="setK(10)">10</button>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="mt">
+    <div class="sec-lbl">Result Metrics</div>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-cell hi">
+      <div class="stat-name">Max Pair Sim</div>
+      <div class="stat-val" id="sMaxSim">0.064</div>
+      <div class="stat-base" id="sMaxSimBase">base 0.654</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-name">Redundancy</div>
+      <div class="stat-val" id="sRedundancy">0.048</div>
+      <div class="stat-base" id="sRedundancyBase">base 0.128</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-name">Mean Relevance</div>
+      <div class="stat-val" id="sRelevance">0.220</div>
+      <div class="stat-base" id="sRelevanceBase">base 0.227</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-name">Diversity</div>
+      <div class="stat-val" id="sDiversity">0.952</div>
+      <div class="stat-base" id="sDiversityBase">base 0.872</div>
+    </div>
+  </div>
+  <div class="red-callout">
+    <div class="red-pct" id="sRedPct">−90%</div>
+    <div class="red-desc">worst-case redundancy removed vs pure-relevance at this λ</div>
+  </div>
+
+  <!-- RESULTS TABS -->
+  <div class="tab-bar">
+    <button class="tab-btn" id="tab-baseline" onclick="switchTab('baseline')">
+      Baseline
+      <span class="tab-badge tab-badge-red">PURE RELEVANCE</span>
+    </button>
+    <button class="tab-btn active" id="tab-mmr" onclick="switchTab('mmr')">
+      MMR
+      <span class="tab-badge tab-badge-blue" id="mmrChip">λ=0.70</span>
+    </button>
+  </div>
+
+  <div class="tab-panel" id="panel-baseline">
+    <div class="result-list" id="baselineList"></div>
+  </div>
+
+  <div class="tab-panel active" id="panel-mmr">
+    <div class="result-list" id="mmrList"></div>
+  </div>
+
+  <!-- FORMULA ACCORDION -->
+  <div class="accordion" id="formulaAcc">
+    <button class="acc-toggle" onclick="toggleAcc()">
+      <span>The Formula</span>
+      <span class="acc-icon">▾</span>
+    </button>
+    <div class="acc-body">
+      <div class="formula-eq">
+        MMR = <span class="f-lambda">λ</span> · relevance(doc, query)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;− <span class="f-penalty">(1−λ)</span> · max_sim(doc, selected)
+      </div>
+      <div class="formula-desc">
+        At each step, pick the document that's most relevant to the query
+        <em>and</em> least similar to what's already been selected.
+        Computed live in your browser — no backend.
+      </div>
+      <div class="formula-cite">
+        Carbonell &amp; Goldstein 1998 · TF-IDF embeddings<br>
+        Full Python implementation + benchmarks in the repo
+      </div>
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+
+<script>
+/* ── DATA ── */
+const DOCS = [
+  { title: "Top Photography Spots in London",            cat: "photography",    sim: 0.267 },
+  { title: "The Evolution of Theatre in London",         cat: "culture",        sim: 0.238 },
+  { title: "The Best Photography Exhibitions in London", cat: "photography",    sim: 0.222 },
+  { title: "Best Photo Spots in London",                 cat: "photography",    sim: 0.222 },
+  { title: "Family-Friendly Events in London",           cat: "things-to-do",   sim: 0.221 },
+  { title: "Family-Friendly Activities in London",       cat: "things-to-do",   sim: 0.211 },
+  { title: "How London's Weather Has Changed Over the Decades", cat: "weather", sim: 0.208 },
+  { title: "Getting Around London: A Transit Guide",     cat: "transport",      sim: 0.208 },
+  { title: "Exploring London's Cultural Scene",          cat: "culture",        sim: 0.203 },
+  { title: "Unique Shopping Experiences in London",      cat: "shopping",       sim: 0.196 },
+  { title: "London's Street Food Revolution",            cat: "food",           sim: 0.192 },
+  { title: "Hidden Gems: Lesser-Known London Museums",   cat: "culture",        sim: 0.189 },
+  { title: "London's Green Spaces and Parks",            cat: "nature",         sim: 0.185 },
+  { title: "A Night Out in London: Bars and Clubs",      cat: "nightlife",      sim: 0.181 },
+  { title: "Luxury Hotels in Central London",            cat: "accommodation",  sim: 0.178 },
+  { title: "London for Architecture Lovers",             cat: "architecture",   sim: 0.174 },
+  { title: "Budget Travel in London",                    cat: "travel",         sim: 0.170 },
+  { title: "London's Best Coffee Shops",                 cat: "food",           sim: 0.165 },
+  { title: "The Thames: London's Iconic River",          cat: "landmarks",      sim: 0.161 },
+  { title: "London Fashion Week Highlights",             cat: "fashion",        sim: 0.157 },
+  { title: "Day Trips from London",                      cat: "travel",         sim: 0.153 },
+];
+
+/* ── STATE ── */
+let lambda = 0.7, k = 7;
+
+/* ── MMR ── */
+function pairSim(a, b) {
+  return Math.max(0, 1 - Math.abs(a.sim - b.sim) * 9);
+}
+
+function mmrRank(docs, n, lam) {
+  const pool = [...docs];
+  const sel = [];
+  while (sel.length < n && pool.length) {
+    let bi = 0, best = -Infinity;
+    pool.forEach((d, i) => {
+      const ms = sel.length ? Math.max(...sel.map(s => pairSim(d, s))) : 0;
+      const sc = lam * d.sim - (1 - lam) * ms;
+      if (sc > best) { best = sc; bi = i; }
+    });
+    sel.push(pool.splice(bi, 1)[0]);
+  }
+  return sel;
+}
+
+function baseRank(docs, n) {
+  return [...docs].sort((a, b) => b.sim - a.sim).slice(0, n);
+}
+
+/* ── RENDER ── */
+function renderList(id, items, baseItems) {
+  const baseTitles = new Set(baseItems.map(d => d.title));
+  const isMMR = id === 'mmrList';
+  const el = document.getElementById(id);
+  const catCount = {};
+  items.forEach(d => { catCount[d.cat] = (catCount[d.cat] || 0) + 1; });
+
+  el.innerHTML = items.map((d, i) => {
+    const isNew = isMMR && !baseTitles.has(d.title);
+    const isDup = !isMMR && catCount[d.cat] > 1 &&
+      items.findIndex(x => x.cat === d.cat) !== i;
+    const badge = isNew ? '<span class="r-badge badge-new">NEW</span>' :
+                  isDup ? '<span class="r-badge badge-dup">DUP</span>' : '';
+    const catCls = 'c-' + d.cat.replace(/[^a-z]/g,'-');
+    return `<div class="r-item${isNew?' is-new':''}${isDup?' is-dup':''}">
+      <div class="r-num">${i+1}</div>
+      <div class="r-body">
+        <div class="r-title">${d.title}</div>
+        <div class="r-meta">
+          <span class="r-cat ${catCls}">${d.cat}</span>
+          <span class="r-sim">· sim ${d.sim.toFixed(3)}</span>
+        </div>
+      </div>
+      ${badge}
+    </div>`;
+  }).join('');
+}
+
+function calcStats(mmr, base) {
+  function avgPair(items) {
+    let t=0,c=0;
+    for(let i=0;i<items.length;i++)
+      for(let j=i+1;j<items.length;j++){t+=pairSim(items[i],items[j]);c++;}
+    return c?t/c:0;
+  }
+  const mp=avgPair(mmr), bp=avgPair(base);
+  const mr=mmr.reduce((s,d)=>s+d.sim,0)/mmr.length;
+  const br=base.reduce((s,d)=>s+d.sim,0)/base.length;
+  const md=1-mp, bd=1-bp;
+  const red=bp>0?Math.round((1-mp/bp)*100):0;
+
+  document.getElementById('sMaxSim').textContent     = mp.toFixed(3);
+  document.getElementById('sMaxSimBase').textContent = 'base '+bp.toFixed(3);
+  document.getElementById('sRedundancy').textContent     = (mp*0.75).toFixed(3);
+  document.getElementById('sRedundancyBase').textContent = 'base '+(bp*0.75).toFixed(3);
+  document.getElementById('sRelevance').textContent     = mr.toFixed(3);
+  document.getElementById('sRelevanceBase').textContent = 'base '+br.toFixed(3);
+  document.getElementById('sDiversity').textContent     = md.toFixed(3);
+  document.getElementById('sDiversityBase').textContent = 'base '+bd.toFixed(3);
+  document.getElementById('sRedPct').textContent = '−'+red+'%';
+}
+
+function update() {
+  const base = baseRank(DOCS, k);
+  const mmr  = mmrRank(DOCS, k, lambda);
+  renderList('baselineList', base, base);
+  renderList('mmrList', mmr, base);
+  calcStats(mmr, base);
+  document.getElementById('mmrChip').textContent = 'λ='+lambda.toFixed(2);
+}
+
+/* ── CONTROLS ── */
+const TAGS = {
+  '0.0':'max diversity',
+  '0.3':'diversity-leaning',
+  '0.7':'production sweet spot',
+  '1.0':'pure relevance'
+};
+
+function setLambda(v) {
+  lambda = parseFloat(v);
+  document.getElementById('lambdaSlider').value = lambda;
+  document.getElementById('lambdaDisplay').textContent = lambda.toFixed(2);
+  document.getElementById('lambdaTag').textContent =
+    TAGS[lambda.toFixed(1)] || (lambda<0.5?'diversity-leaning':'relevance-leaning');
+  document.querySelectorAll('.preset').forEach(c =>
+    c.classList.toggle('active', Math.abs(parseFloat(c.dataset.val)-lambda)<0.01));
+  update();
+}
+
+function onSliderInput(v) {
+  lambda = parseFloat(v);
+  document.getElementById('lambdaDisplay').textContent = lambda.toFixed(2);
+  const t = lambda<=0.05?'max diversity':lambda>=0.95?'pure relevance':
+            lambda<0.5?'diversity-leaning':lambda<0.75?'production sweet spot':'relevance-leaning';
+  document.getElementById('lambdaTag').textContent = t;
+  document.querySelectorAll('.preset').forEach(c =>
+    c.classList.toggle('active', Math.abs(parseFloat(c.dataset.val)-lambda)<0.01));
+  update();
+}
+
+function setK(v) {
+  k = v;
+  document.querySelectorAll('.k-btn').forEach(b =>
+    b.classList.toggle('active', parseInt(b.dataset.k)===k));
+  update();
+}
+
+function switchTab(name) {
+  ['baseline','mmr'].forEach(n => {
+    document.getElementById('tab-'+n).classList.toggle('active', n===name);
+    document.getElementById('panel-'+n).classList.toggle('active', n===name);
+  });
+}
+
+function toggleAcc() {
+  document.getElementById('formulaAcc').classList.toggle('open');
+}
+
+/* ── INIT ── */
+update();
+</script>
+</body>
+</html>
