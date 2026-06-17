@@ -502,10 +502,13 @@ async function run() {
   saveState();
 }
 
-/* effectiveK — MMR caps at 70% of corpus so there's always a pool to draw NEW docs from */
+/* effectiveK — MMR always gets strictly fewer slots than k
+   so there are always excluded docs it can "promote" vs baseline.
+   Formula: min(k-1, floor(n*0.7)) capped to [1, n-1] */
 function effectiveK() {
   const n = docs.filter(d=>d.vec).length || docs.length;
-  return Math.max(1, Math.min(k, Math.floor(n * 0.7)));
+  if (n <= 1) return 1;
+  return Math.max(1, Math.min(k - 1, Math.floor(n * 0.7), n - 1));
 }
 
 /* recompute rankings only (no re-embed) when lambda/k change */
@@ -513,42 +516,65 @@ function recompute() {
   if (!lastResults) return;
   const qvec = lastResults.qvec;
   const idxs = docs.map((_,i)=>i).filter(i=>docs[i].vec);
-  if (idxs.length<2) return;
+  if (idxs.length < 2) return;
   const ek = effectiveK();
-  renderResults(baselineRank(idxs,qvec,k), mmrRank(idxs,qvec,ek,lambda), ek);
+  renderResults(baselineRank(idxs, qvec, k), mmrRank(idxs, qvec, ek, lambda), ek);
 }
 
 function renderResults(baseline, mmr, ek) {
-  renderList('baselineList', baseline, baseline, false);
-  renderList('mmrList', mmr, baseline, true);
+  const n = docs.filter(d=>d.vec).length || docs.length;
+
+  // NEW badge: doc appears in MMR top-ek but NOT in baseline top-ek (fair, same-size comparison)
+  // This is the honest definition: "MMR chose this; pure relevance at the same budget wouldn't have"
+  renderList('baselineList', baseline, null, false);
+  renderList('mmrList', mmr, baselineRank(docs.map((_,i)=>i).filter(i=>docs[i].vec),
+    lastResults.qvec, ek), true);
   calcStats(mmr, baseline);
   $('mmrChip').textContent = 'λ='+lambda.toFixed(2);
 
-  // warning when k >= doc count (MMR couldn't exclude anything)
-  const warnId = 'mmrWarn';
-  let warn = $(warnId);
+  // Warning banner — created once, reused on every render
+  let warn = $('mmrWarn');
   if (!warn) {
     warn = document.createElement('div');
-    warn.id = warnId;
-    warn.style.cssText = 'font-family:var(--font-mono);font-size:0.65rem;font-weight:700;'+
-      'text-transform:uppercase;letter-spacing:0.05em;background:var(--yellow);'+
-      'border:var(--border);border-top:none;padding:10px 14px;line-height:1.5;';
+    warn.id = 'mmrWarn';
+    warn.style.cssText =
+      'font-family:var(--font-mono);font-size:0.63rem;font-weight:700;letter-spacing:0.05em;'+
+      'border:var(--border);border-top:none;padding:10px 14px;line-height:1.6;';
     $('tab-mmr').closest('.tab-bar').after(warn);
   }
-  const tooFew = docs.length <= k;
-  warn.style.display = tooFew ? 'block' : 'none';
-  warn.textContent = tooFew
-    ? `⚠ Add more docs (need > ${k}) or lower k to see MMR diverge from baseline`
-    : `MMR showing top ${ek} of ${docs.length} docs — baseline shows all ${Math.min(k,docs.length)}`;
 
-  // always switch to MMR tab after a run so user sees the result
+  const tooFew = n <= k;
+  const noDiv  = lambda >= 1.0;
+
+  if (tooFew) {
+    warn.style.background = 'var(--yellow)';
+    warn.style.display = 'block';
+    warn.textContent =
+      `⚠ Add more than ${k} docs, or lower k — with ${n} docs and k=${k} baseline already shows everything, so MMR can't diverge.`;
+  } else if (noDiv) {
+    warn.style.background = 'var(--yellow)';
+    warn.style.display = 'block';
+    warn.textContent =
+      `⚠ At λ=1.0 MMR = pure relevance. Lower λ to let diversity re-rank.`;
+  } else {
+    warn.style.background = '#e8f5e9';
+    warn.style.display = 'block';
+    warn.textContent =
+      `MMR shows top ${ek} docs (diversity-capped). Baseline shows top ${Math.min(k,n)}. `+
+      `NEW = doc MMR chose that pure relevance at budget ${ek} wouldn't have. `+
+      `No NEW badges? Your docs may not be redundant enough — try λ=0.3 to force diversity.`;
+  }
+
+  // Always land on MMR tab after a Run
   switchTab('mmr');
 }
-function renderList(id, items, baseItems, isMMR) {
-  const baseIds = new Set(baseItems.map(x=>x.idx));
-  $(id).innerHTML = items.map((it,i)=>{
+
+function renderList(id, items, compareItems, isMMR) {
+  // compareItems: if provided, any item in `items` not in compareItems gets a NEW badge
+  const compareIds = compareItems ? new Set(compareItems.map(x=>x.idx)) : null;
+  $(id).innerHTML = items.map((it,i) => {
     const d = docs[it.idx];
-    const isNew = isMMR && !baseIds.has(it.idx);
+    const isNew = isMMR && compareIds && !compareIds.has(it.idx);
     const badge = isNew ? '<span class="r-badge badge-new">NEW</span>' : '';
     return `<div class="r-item${isNew?' is-new':''}">
       <div class="r-num">${i+1}</div>
