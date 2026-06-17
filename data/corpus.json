@@ -1,0 +1,27 @@
+{
+  "query": "London",
+  "documents": [
+    {"id": 0,  "category": "things-to-do", "title": "Family-Friendly Activities in London"},
+    {"id": 1,  "category": "things-to-do", "title": "Family-Friendly Events in London"},
+    {"id": 2,  "category": "photography",  "title": "The Best Photography Exhibitions in London"},
+    {"id": 3,  "category": "photography",  "title": "Best Photo Spots in London"},
+    {"id": 4,  "category": "photography",  "title": "Top Photography Spots in London"},
+    {"id": 5,  "category": "shopping",     "title": "Unique Shopping Experiences in London"},
+    {"id": 6,  "category": "culture",      "title": "Exploring London's Cultural Scene"},
+    {"id": 7,  "category": "culture",      "title": "The Evolution of Theatre in London"},
+    {"id": 8,  "category": "culture",      "title": "The Revival of Ancient Traditions in Modern Society"},
+    {"id": 9,  "category": "weather",      "title": "How London's Weather Has Changed Over the Decades"},
+    {"id": 10, "category": "weather",      "title": "Weather Patterns Affecting London This Summer"},
+    {"id": 11, "category": "weather",      "title": "Understanding the Science Behind Extreme Weather Events"},
+    {"id": 12, "category": "outdoors",     "title": "The Best Parks and Green Spaces in London"},
+    {"id": 13, "category": "outdoors",     "title": "Day Trips from London: Exploring the Countryside"},
+    {"id": 14, "category": "landmarks",    "title": "Historic Landmarks You Can't Miss in London"},
+    {"id": 15, "category": "food",         "title": "A Food Lover's Guide to London's Markets"},
+    {"id": 16, "category": "food",         "title": "The Best Street Food Markets in London"},
+    {"id": 17, "category": "transport",    "title": "Getting Around London: A Transit Guide"},
+    {"id": 18, "category": "history",      "title": "The Hidden History of London's Underground"},
+    {"id": 19, "category": "offtopic",     "title": "Python Tips for Mastering Data Science"},
+    {"id": 20, "category": "offtopic",     "title": "A Beginner's Guide to Machine Learning"}
+  ],
+  "notes": "Deliberate near-duplicate clusters: {0,1} family activities/events, {2,3,4} photography spots/exhibitions, {15,16} food markets. Off-topic distractors {19,20} test whether low lambda pulls in irrelevant-but-diverse docs."
+}
